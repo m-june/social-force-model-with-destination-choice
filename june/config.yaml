@@ -1,8 +1,8 @@
 input:
-  - '/home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2344-2404_interp9_xrange5-25_yrange15-35.npy'
+  '/home/aaf15257iq/work/GC_annotation/processed_data/duration_360'
 
 output:
-  - '/home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2344-2404_interp9_xrange5-25_yrange15-35_sfm.npy'
+  '/home/aaf15257iq/work/GC_annotation/simulated_data/duration_360'
 
 device:
   'cpu'

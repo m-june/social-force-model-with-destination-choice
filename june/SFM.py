@@ -7,6 +7,7 @@ import warnings
 import argparse
 from tqdm import tqdm
 import time
+import os
 warnings.simplefilter('ignore')
 
 import sys
@@ -127,7 +128,18 @@ if __name__ == "__main__":
     load_path = data_path
     data = np.load(load_path, allow_pickle=True)
     meta_data, trajectories, destinations, obstacles = data
-
+    # trajectories_ = trajectories
+    if len(trajectories) == 0:
+        print("No trajectories")
+        file_name = os.path.basename(load_path)
+        file_name = file_name.split(".")[0]
+        file_name = file_name + "_sfm.npy"
+        save_path = os.path.join(args.output, file_name)
+        data = np.array((meta_data, trajectories, destinations, obstacles), dtype=object)
+        np.save(save_path, data)
+        print("saved for ", save_path)
+        print("Total time: ", time.time() - start_time)
+        exit()
     mean_v = []
     for u in trajectories:
         first = u[0][:2]
@@ -172,7 +184,11 @@ if __name__ == "__main__":
     # print("destinations")
     # print(destinations)
 
-    save_path = args.output
+    # file_path = os.path.dirname(load_path)
+    file_name = os.path.basename(load_path)
+    file_name = file_name.split(".")[0]
+    file_name = file_name + "_sfm.npy"
+    save_path = os.path.join(args.output, file_name)
     data = np.array((meta_data, trajectories, destinations, obstacles), dtype=object)
     np.save(save_path, data)
     print("saved for ", save_path)
