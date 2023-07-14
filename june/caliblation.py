@@ -1,6 +1,6 @@
 #SFM.pyで作られたtrajectoriesと元のデータを比較する
-#比較はMSEを用いる
-#MSEはMean Squared Errorの略で、二つのデータの差の二乗の平均を表す
+#比較はmaeを用いる
+#maeはMean Squared Errorの略で、二つのデータの差の二乗の平均を表す
 
 
 import numpy as np
@@ -25,7 +25,7 @@ def get_args():
     return args
 
 #realとsimの加速度の差を計算する
-def loss_function():
+def acc_mae():
     args = get_args()
     real = np.load(args.real, allow_pickle=True)
     sim = np.load(args.sim, allow_pickle=True)
@@ -35,7 +35,7 @@ def loss_function():
     sim_trajectories = sim[1]
 
     progress_bar = tqdm(total=len(real_trajectories), desc="Function Progress")
-    mse = 0
+    mae = 0
     for i in range(len(real_trajectories)):
         first_step = real_trajectories[i][0][-1]
         num_step = min(real_trajectories[i][-1][-1], sim_trajectories[i][-1][-1]) + 1 - first_step
@@ -47,14 +47,46 @@ def loss_function():
             sim_vel = np.array(sim_trajectories[i][t+1][:2]) - np.array(sim_trajectories[i][t][:2])
             sim_vel_ = np.array(sim_trajectories[i][t+2][:2]) - np.array(sim_trajectories[i][t+1][:2])
             sim_acc = sim_vel_ - sim_vel
-            mse += np.linalg.norm(real_acc - sim_acc)
+            mae += np.linalg.norm(real_acc - sim_acc)
             # mse += np.linalg.norm(real_acc - sim_acc) ** 2
             t += 1
         progress_bar.update(1)
-    mse /= len(real_trajectories)
+    mae /= len(real_trajectories)
     progress_bar.close()
-    return mse
+    return mae
+
+#realとsimの位置の差を計算する
+def posi_mae():
+    args = get_args()
+    real = np.load(args.real, allow_pickle=True)
+    sim = np.load(args.sim, allow_pickle=True)
+    print(real.shape)
+    print(sim.shape)
+    real_trajectories = real[1]
+    sim_trajectories = sim[1]
+
+    progress_bar = tqdm(total=len(real_trajectories), desc="Function Progress")
+    mae = 0
+    for i in range(len(real_trajectories)):
+        m = 0
+        first_step = real_trajectories[i][0][-1]
+        num_step = min(real_trajectories[i][-1][-1], sim_trajectories[i][-1][-1]) + 1 - first_step
+        t = 0
+        while t < num_step:
+            real_posi = np.array(real_trajectories[i][t][:2])
+            sim_posi = np.array(sim_trajectories[i][t][:2])
+            m += np.linalg.norm(real_posi - sim_posi)
+            # mse += np.linalg.norm(real_acc - sim_acc) ** 2
+            t += 1
+        m /= num_step
+        progress_bar.update(1)
+        mae += m
+    mae /= len(real_trajectories)
+    progress_bar.close()
+    return mae
 
 if __name__ == '__main__':
-    mae = loss_function()
-    print(mae)
+    acc_mae = acc_mae()
+    posi_mae = posi_mae()
+    print("ACC_MAE=",acc_mae)
+    print("POS_MAE=",posi_mae)
