@@ -18,8 +18,8 @@ warnings.simplefilter('ignore')
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-r', '--real', type=str, default='/home/aaf15257iq/work/GC_annotation/processed_data/duration_60/GC_Dataset_ped1-12685_time2340-2400_interp9_xrange5-25_yrange15-35.npy')
-    parser.add_argument('-s', '--sim', type=str, default='/home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2340-2400_interp9_xrange5-25_yrange15-35_sfm.npy')
+    parser.add_argument('-r', '--real', type=str, default='/home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2344-2404_interp9_xrange5-25_yrange15-35.npy')
+    parser.add_argument('-s', '--sim', type=str, default='/home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2344-2404_interp9_xrange5-25_yrange15-35_sfm.npy')
 
     args = parser.parse_args()
     return args
@@ -34,26 +34,33 @@ def acc_mae():
     real_trajectories = real[1]
     sim_trajectories = sim[1]
 
+
     progress_bar = tqdm(total=len(real_trajectories), desc="Function Progress")
     mae = 0
+    mse = 0
     for i in range(len(real_trajectories)):
         first_step = real_trajectories[i][0][-1]
         num_step = min(real_trajectories[i][-1][-1], sim_trajectories[i][-1][-1]) + 1 - first_step
         t = 0
         while t < num_step - 2:
             real_vel = np.array(real_trajectories[i][t+1][:2]) - np.array(real_trajectories[i][t][:2])
+            real_vel = real_vel/0.08
             real_vel_ = np.array(real_trajectories[i][t+2][:2]) - np.array(real_trajectories[i][t+1][:2])
-            real_acc = real_vel_ - real_vel
+            real_vel_ = real_vel_/0.08
+            real_acc = (real_vel_ - real_vel)/0.08
             sim_vel = np.array(sim_trajectories[i][t+1][:2]) - np.array(sim_trajectories[i][t][:2])
+            sim_vel = sim_vel/0.08
             sim_vel_ = np.array(sim_trajectories[i][t+2][:2]) - np.array(sim_trajectories[i][t+1][:2])
-            sim_acc = sim_vel_ - sim_vel
+            sim_vel_ = sim_vel_/0.08
+            sim_acc = (sim_vel_ - sim_vel)/0.08
             mae += np.linalg.norm(real_acc - sim_acc)
-            # mse += np.linalg.norm(real_acc - sim_acc) ** 2
+            mse += np.linalg.norm(real_acc - sim_acc) ** 2
             t += 1
         progress_bar.update(1)
     mae /= len(real_trajectories)
+    mse /= len(real_trajectories)
     progress_bar.close()
-    return mae
+    return mae, mse
 
 #realとsimの位置の差を計算する
 def posi_mae():
@@ -78,7 +85,7 @@ def posi_mae():
             m += np.linalg.norm(real_posi - sim_posi)
             # mse += np.linalg.norm(real_acc - sim_acc) ** 2
             t += 1
-        m /= num_step
+        # m = m / num_step
         progress_bar.update(1)
         mae += m
     mae /= len(real_trajectories)
@@ -86,7 +93,8 @@ def posi_mae():
     return mae
 
 if __name__ == '__main__':
-    acc_mae = acc_mae()
+    acc_mae, acc_mse = acc_mae()
     posi_mae = posi_mae()
     print("ACC_MAE=",acc_mae)
+    print("ACC_MSE=",acc_mse)
     print("POS_MAE=",posi_mae)

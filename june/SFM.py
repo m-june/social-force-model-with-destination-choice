@@ -20,8 +20,8 @@ from destination_choice_model import DestinationChoiceModel
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input', type=str, default='../data/od/od.csv')
-    parser.add_argument('-o', '--output', type=str, default='../output/trajectory.csv')
+    parser.add_argument('-i', '--input', type=str, default='/home/aaf15257iq/work/GC_annotation/processed_data/duration_60/GC_Dataset_ped1-12685_time0-60_interp9_xrange5-25_yrange15-35.npy')
+    parser.add_argument('-o', '--output', type=str, default='/home/aaf15257iq/work/GC_annotation/simulated_data/')
     parser.add_argument('-d', '--device', type=str, default='cpu')  
     args = parser.parse_args()
     return args
@@ -46,7 +46,7 @@ def run_SFM(trajectories, mean_v, mean_vx, mean_vy, num_step, sfm, dests):
         agents[i] = AgentSFM(no=i,
                           t0=trajectories[i][0][-1],
                           r=0.2,
-                          v0=np.array(mean_v[i]),
+                          v0=np.array(np.mean(mean_v)),
                           loc=[np.array([np.nan, np.nan, np.nan])],
                           vel=[np.array([np.nan, np.nan])],
                           dest=[np.array([np.nan, np.nan])],
