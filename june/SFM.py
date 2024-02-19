@@ -20,9 +20,13 @@ from destination_choice_model import DestinationChoiceModel
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input', type=str, default='/home/aaf15257iq/work/GC_annotation/processed_data/duration_60/GC_Dataset_ped1-12685_time0-60_interp9_xrange5-25_yrange15-35.npy')
-    parser.add_argument('-o', '--output', type=str, default='/home/aaf15257iq/work/GC_annotation/simulated_data/')
-    parser.add_argument('-d', '--device', type=str, default='cpu')  
+    parser.add_argument('-i', '--input', type=str, default='/home/aaf15257iq/work/GC_annotation/processed_data/duration_60_0.8/GC_Dataset_ped1-12685_time2400-2460_interp0_xrange5-25_yrange15-35.npy')
+    parser.add_argument('-o', '--output', type=str, default='/home/aaf15257iq/work/GC_annotation/simulated_data/duration_60_0.8/')
+    parser.add_argument('-d', '--device', type=str, default='cpu')
+    parser.add_argument('--a1', type=float, default=3.3)
+    parser.add_argument('--b', type=float, default=0.4)
+    parser.add_argument('--a2', type=float, default=1)
+    parser.add_argument('--c', type=float, default=0.5) 
     args = parser.parse_args()
     return args
 
@@ -46,7 +50,7 @@ def run_SFM(trajectories, mean_v, mean_vx, mean_vy, num_step, sfm, dests):
         agents[i] = AgentSFM(no=i,
                           t0=trajectories[i][0][-1],
                           r=0.2,
-                          v0=np.array(np.mean(mean_v)),
+                          v0=np.array(mean_v[i]),
                           loc=[np.array([np.nan, np.nan, np.nan])],
                           vel=[np.array([np.nan, np.nan])],
                           dest=[np.array([np.nan, np.nan])],
@@ -58,9 +62,10 @@ def run_SFM(trajectories, mean_v, mean_vx, mean_vy, num_step, sfm, dests):
     while t < num_step:  # until all pedestrians move to right
         for i in range(num_agent):
             # generate agents
+            # if agents[i].t0 == int(t/10) and t % 10 == 0:
             if agents[i].t0 == t:
                 agents[i].loc[t] = np.array(
-                    [trajectories[i][0][0], trajectories[i][0][1], trajectories[i][0][2]])
+                    [trajectories[i][0][0], trajectories[i][0][1], t])
                 agents[i].vel[t] = np.array([np.mean(mean_vx), np.mean(mean_vy)])
                 agents[i].dest[t] = dests[i][:2]
                 # print(f"agents[{i}].dest[{t}]", agents[i].dest[t])
@@ -98,6 +103,14 @@ def read_trajectory(agents):
     for i in range(len(agents)):
         traj = agents[i].loc
         traj = [row.tolist() for row in traj if not np.isnan(row).any()]
+        # print(traj)
+        # tr = []
+        # for t in range(0, len(traj), 10):
+        #     time = int(t/10)
+        #     tr.append(traj[t])
+        #     tr[time][2] = int(traj[t][2]/10)
+        # print('tr:',tr)
+        # exit()
         traj = convert_last_to_int(traj)
         trajectories.append(traj)
     
@@ -128,6 +141,13 @@ if __name__ == "__main__":
     load_path = data_path
     data = np.load(load_path, allow_pickle=True)
     meta_data, trajectories, destinations, obstacles = data
+    
+    # rewrite the meta_data to 0.8
+    meta_data['time_unit'] = 0.8
+    meta_data['interpolation'] = 0
+    print(meta_data)
+    # print(destinations)
+    # exit()
     # trajectories_ = trajectories
     if len(trajectories) == 0:
         print("No trajectories")
@@ -142,37 +162,46 @@ if __name__ == "__main__":
         exit()
     mean_v = []
     for u in trajectories:
-        first = u[0][:2]
-        last = u[-1][:2]
         tau = u[-1][-1] - u[0][-1]
+        if tau >= 3:
+            first = u[0][:2]
+            last = u[3][:2]
+            tau = 3
+        else:
+            first = u[0][:2]
+            last = u[-1][:2]
+            tau = u[-1][-1] - u[0][-1]
         first, last = np.array(first), np.array(last)
         v = (last - first) / tau
+        v = v / 0.8
         v = v.tolist()
         mean_v.append(v)
     mean_vl = [np.linalg.norm(v) for v in mean_v]
     mean_vx = [v[0] for v in mean_v]
+    mean_vx = [value for value in mean_vx if not np.isnan(value)]
     mean_vy = [v[1] for v in mean_v]
+    mean_vy = [value for value in mean_vy if not np.isnan(value)]
     
     params_sfm = {
-        "dt": 1,
-        "A1": 2.1,
-        "B": 0.3,
+        "dt": 0.8,
+        "A1": 3.3,
+        "B": 0.4,
         "A2": 1,
-        "tau": 1,
+        "tau": 0.5,
         "phi": 100,
         "c": 0.5
     }
     walls = np.array(obstacles)
     walls_points = walls.tolist()
     sfm = SocialForceModel(params_sfm, walls_points)
-    num_steps = max([u[-1][-1] for u in trajectories]) + 1
+    num_steps = max([u[-1][-1] for u in trajectories]) + 1 #* 10
     # num_steps = 100 # for test
     # dests = [[x[0] for x in sublist] for sublist in destinations]
     dests = [list(item[0]) for item in destinations]
     # print(dests)
 
     agents = run_SFM(trajectories, mean_vl, mean_vx, mean_vy, num_steps, sfm, dests)
-    
+
     trajectories, destinations = read_trajectory(agents)
 
     converted_trajectories = []

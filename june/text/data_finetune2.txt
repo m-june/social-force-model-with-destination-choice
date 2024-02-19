@@ -1,0 +1,14 @@
+Data Count:
+train: 659
+valid: 190
+test: 166
+
+Data Paths:
+train:
+  - /home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2104-2164_interp9_xrange5-25_yrange15-35.npy
+  - /home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2164-2224_interp9_xrange5-25_yrange15-35.npy
+  - /home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2224-2284_interp9_xrange5-25_yrange15-35.npy
+valid:
+  - /home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2284-2344_interp9_xrange5-25_yrange15-35.npy
+test:
+  - /home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2344-2404_interp9_xrange5-25_yrange15-35.npy

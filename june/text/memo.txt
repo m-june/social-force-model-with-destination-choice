@@ -1,0 +1,38 @@
+test/val collision count hard/soft: 0.0 & 0.0                                                                                                                                                                                                                                                      
+loss:  6.869318499273662                                                                                                                                                                                                                                                                           
+mse:  6.869318499273662                                                                                                                                                                                                                                                                            
+mae:  1.94209985054196                                                                                                                                                                                                                                                                             
+ot:  4.363424990623779                                                                                                                                                                                                                                                                             
+mmd:  0.0509129387144379 
+
+
+
+
+Original simulator:
+test/val collision count hard/soft: 116.0 & 446.0
+loss:  3.717644681162506
+mse:  3.717644681162506
+mae:  1.246507100987385
+ot:  2.02668180377492
+mmd:  0.016308347255853582
+
+New simulator:
+test/val collision count hard/soft: 2.0 & 16.0
+loss:  4.67698325304732
+mse:  4.67698325304732
+mae:  1.4628932240378985
+ot:  2.5749298071401507
+mmd:  0.023697791903307945
+
+update simulator:
+test/val collision count hard/soft: 290.0 & 880.0
+loss:  4.431065198009262
+mse:  4.431065198009262
+mae:  1.2765060281045404
+ot:  2.101181589949558
+mmd:  0.013827792294426069
+
+ped_embeddings = self.ped_encoder(ped_features)
+ped_embeddings = self.ped_processor(ped_embeddings)
+ped_embeddings = self.ped_decoder(ped_embeddings)
+pred_acc_ped = self.ped_predictor(ped_embeddings)

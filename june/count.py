@@ -6,6 +6,7 @@ from tqdm.notebook import trange, tqdm
 import warnings
 import argparse
 import time
+import datetime
 from tqdm import tqdm
 import yaml
 import os
@@ -52,8 +53,7 @@ def make_hist():
     # ヒストグラムを表示
     plt.show()
 
-def count_yaml():
-    config_path = '/home/aaf15257iq/work/equivariant-PIML/src/configs/data_configs/data_finetune2.yaml'
+def count_yaml(config_path):
     with open(config_path, 'r') as stream:
         data_paths = yaml.load(stream, Loader=yaml.FullLoader)
     print(data_paths)
@@ -65,8 +65,42 @@ def count_yaml():
             ped_num += len(d[1])
         data[key] = ped_num
     print(data)
+    return data, data_paths
+
+def count_datanum(data_paths):
+    with open(config_path, 'r') as stream:
+        data_paths = yaml.load(stream, Loader=yaml.FullLoader)
+    print(data_paths)
+    data = defaultdict(list)
+    for key in data_paths.keys():
+        data_num = 0
+        for path in data_paths[key]:
+            d = np.load(path, allow_pickle=True)
+            for i in range(len(d[1])):
+                data_num += len(d[1][i])
+        data[key] = data_num
+    print(data)
+    return data, data_paths
+
+def save_dict_to_text(data, data_paths, save_path):
+    with open(save_path, 'w') as f:
+        f.write("Data Count:\n")
+        for key, value in data.items():
+            f.write(f"{key}: {value}\n")
+
+        f.write("\nData Paths:\n")
+        for key, paths in data_paths.items():
+            f.write(f"{key}:\n")
+            for path in paths:
+                f.write(f"  - {path}\n")
 
 if __name__ == '__main__':
     # make_hist()
-    count_yaml()
+    config_path = '/home/aaf15257iq/work/equivariant-PIML/src/configs/data_configs/data_pretrain2.yaml'
+    # data, paths = count_yaml(config_path)
+    data, paths = count_datanum(config_path)
+    config = os.path.basename(config_path).split('.')[0] 
+    date = datetime.datetime.now().strftime('%m%d')
+    save_path = 'text/' + str(config) + date + '.txt'
+    save_dict_to_text(data, paths, save_path)
     print('finish')

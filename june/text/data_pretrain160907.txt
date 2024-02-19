@@ -1,0 +1,57 @@
+Data Count:
+train: 691117
+valid: 236114
+
+Data Paths:
+train:
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time0-60_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time60-120_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time120-180_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time180-240_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time240-300_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time300-360_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time360-420_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time420-480_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time480-540_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time540-600_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time600-660_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time660-720_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time720-780_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time780-840_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time840-900_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time900-960_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time960-1020_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1020-1080_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1080-1140_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1140-1200_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1200-1260_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1260-1320_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1320-1380_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1380-1440_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1440-1500_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1500-1560_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1560-1620_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1620-1680_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1680-1740_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1740-1800_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1800-1860_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1860-1920_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1920-1980_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1980-2040_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2040-2100_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2100-2160_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2160-2220_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2220-2280_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2280-2340_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2340-2400_interp9_xrange5-25_yrange15-35_sfm.npy
+valid:
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2400-2460_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2460-2520_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2520-2580_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2580-2640_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2640-2700_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2700-2760_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2760-2820_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2820-2880_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2880-2940_interp9_xrange5-25_yrange15-35_sfm.npy
+  - /home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time2940-3000_interp9_xrange5-25_yrange15-35_sfm.npy

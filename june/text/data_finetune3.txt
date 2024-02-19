@@ -1,0 +1,13 @@
+Data Count:
+train: 294
+valid: 127
+test: 107
+
+Data Paths:
+train:
+  - /home/aaf15257iq/work/equivariant-PIML/data/UCY_dataset/UCY_Dataset_time0-54_timeunit0.08.npy
+  - /home/aaf15257iq/work/equivariant-PIML/data/UCY_dataset/UCY_Dataset_time54-108_timeunit0.08.npy
+valid:
+  - /home/aaf15257iq/work/equivariant-PIML/data/UCY_dataset/UCY_Dataset_time108-162_timeunit0.08.npy
+test:
+  - /home/aaf15257iq/work/equivariant-PIML/data/UCY_dataset/UCY_Dataset_time162-216_timeunit0.08.npy

@@ -18,8 +18,10 @@ warnings.simplefilter('ignore')
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-r', '--real', type=str, default='/home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2344-2404_interp9_xrange5-25_yrange15-35.npy')
-    parser.add_argument('-s', '--sim', type=str, default='/home/aaf15257iq/work/equivariant-PIML/data/GC_dataset/GC_Dataset_ped1-12685_time2344-2404_interp9_xrange5-25_yrange15-35_sfm.npy')
+    # parser.add_argument('-r', '--real', type=str, default='/home/aaf15257iq/work/GC_annotation/processed_data/duration_60_0.8/GC_Dataset_ped1-12685_time1800-1860_interp0_xrange5-25_yrange15-35.npy')
+    # parser.add_argument('-s', '--sim', type=str, default='/home/aaf15257iq/work/GC_annotation/simulated_data/duration_60_0.8/GC_Dataset_ped1-12685_time1800-1860_interp0_xrange5-25_yrange15-35_sfm.npy')
+    parser.add_argument('-r', '--real', type=str, default='/home/aaf15257iq/work/GC_annotation/processed_data/duration_60/GC_Dataset_ped1-12685_time1800-1860_interp9_xrange5-25_yrange15-35.npy')
+    parser.add_argument('-s', '--sim', type=str, default='/home/aaf15257iq/work/GC_annotation/simulated_data/duration_60/GC_Dataset_ped1-12685_time1800-1860_interp9_xrange5-25_yrange15-35_sfm.npy')
 
     args = parser.parse_args()
     return args
@@ -31,6 +33,10 @@ def acc_mae():
     sim = np.load(args.sim, allow_pickle=True)
     print(real.shape)
     print(sim.shape)
+    meta_data = real[0]
+    time_unit = meta_data['time_unit']
+    print('timeunit:',time_unit)
+    print(meta_data)
     real_trajectories = real[1]
     sim_trajectories = sim[1]
 
@@ -44,15 +50,15 @@ def acc_mae():
         t = 0
         while t < num_step - 2:
             real_vel = np.array(real_trajectories[i][t+1][:2]) - np.array(real_trajectories[i][t][:2])
-            real_vel = real_vel/0.08
+            real_vel = real_vel/time_unit
             real_vel_ = np.array(real_trajectories[i][t+2][:2]) - np.array(real_trajectories[i][t+1][:2])
-            real_vel_ = real_vel_/0.08
-            real_acc = (real_vel_ - real_vel)/0.08
+            real_vel_ = real_vel_/time_unit
+            real_acc = (real_vel_ - real_vel)/time_unit
             sim_vel = np.array(sim_trajectories[i][t+1][:2]) - np.array(sim_trajectories[i][t][:2])
-            sim_vel = sim_vel/0.08
+            sim_vel = sim_vel/time_unit
             sim_vel_ = np.array(sim_trajectories[i][t+2][:2]) - np.array(sim_trajectories[i][t+1][:2])
-            sim_vel_ = sim_vel_/0.08
-            sim_acc = (sim_vel_ - sim_vel)/0.08
+            sim_vel_ = sim_vel_/time_unit
+            sim_acc = (sim_vel_ - sim_vel)/time_unit
             mae += np.linalg.norm(real_acc - sim_acc)
             mse += np.linalg.norm(real_acc - sim_acc) ** 2
             t += 1

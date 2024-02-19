@@ -1,0 +1,58 @@
+Data Count:
+train: 119263
+valid: 21612
+
+Data Paths:
+train:
+  - /home/aaf15257iq/work/equivariant-PIML/data/synthetic_data/GC_Dataset_ped1-12685_time2104-2164_interp9_xrange5-25_yrange15-35_simulation.npy
+  - /home/aaf15257iq/work/equivariant-PIML/data/synthetic_data/GC_Dataset_ped1-12685_time2164-2224_interp9_xrange5-25_yrange15-35_simulation.npy
+  - /home/aaf15257iq/work/equivariant-PIML/data/synthetic_data/GC_Dataset_ped1-12685_time2224-2284_interp9_xrange5-25_yrange15-35_simulation.npy
+  - /home/aaf15257iq/work/equivariant-PIML/data/synthetic_data/GC_Dataset_ped1-12685_time2284-2344_interp9_xrange5-25_yrange15-35_simulation.npy
+valid:
+  - /home/aaf15257iq/work/equivariant-PIML/data/synthetic_data/GC_Dataset_ped1-12685_time2344-2404_interp9_xrange5-25_yrange15-35_simulation.npy
+
+
+ped_positions = ped_features[..., :2]
+ped_features = torch.cat([
+    torch.norm(ped_features[..., :2], p=2, dim=-1, keepdim=True),
+    torch.norm(ped_features[..., 2:4], p=2, dim=-1, keepdim=True),
+    torch.norm(ped_features[..., 4:], p=2, dim=-1, keepdim=True)], dim=-1)
+ped_embeddings = self.ped_encoder(ped_features)
+ped_embeddings = self.ped_processor(ped_embeddings)
+ped_msgs = ped_embeddings
+ped_embeddings = torch.einsum('...i,...j->...ij', ped_positions, ped_embeddings)
+ped_embeddings = torch.sum(ped_embeddings, dim=-3)
+ped_embeddings = self.ped_decoder(ped_embeddings)
+pred_acc_ped = self.ped_predictor(ped_embeddings).squeeze(-1)
+
+
+
+self_positions = self_features[..., :2]
+self_features = torch.cat([
+    torch.norm(self_features[..., :2], p=2, dim=-1, keepdim=True),
+    torch.norm(self_features[..., 2:4], p=2, dim=-1, keepdim=True),
+    torch.norm(self_features[..., 4:6], p=2, dim=-1, keepdim=True)], dim=-1)
+self_embeddings = self.self_encoder(self_features)
+self_embeddings = self.self_processor(self_embeddings)
+self_msgs = self_embeddings
+self_embeddings = torch.einsum('...i,...j->...ij', self_positions, self_embeddings)
+self_embeddings = torch.sum(self_embeddings, dim=-2)
+self_embeddings = self.self_decoder(self_embeddings)
+pred_acc_dest = self.self_predictor(self_embeddings)
+
+
+
+self_embeddings = self.self_encoder(self_features[..., :6])
+self_embeddings = self.self_processor(self_embeddings)
+self_embeddings = self.self_decoder(self_embeddings)
+pred_acc_dest = self.self_predictor(self_embeddings)
+self_msgs = pred_acc_dest
+
+
+
+desired_speed = self_features[..., -1].unsqueeze(-1)
+temp = torch.norm(self_features[..., :2], p=2, dim=1, keepdim=True)
+temp_ = temp.clone()
+temp_[temp_ == 0] = temp_[temp_ == 0] + 0.1  # to avoid zero division
+dest_direction = self_features[..., :2] / temp_
+pred_acc_dest = (desired_speed * dest_direction - self_features[..., 2:4]) / self.tau
