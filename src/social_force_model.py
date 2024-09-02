@@ -31,6 +31,10 @@ class SocialForceModel:
                 if j != i:
                     distance = np.linalg.norm(
                         agents[i].loc[t][:2] - agents[j].loc[t][:2])
+                    
+                    print('t:{} i:{}'.format(t, i))
+                    print('rel_loc', agents[i].loc[t][:2]-agents[j].loc[t][:2])
+
                     n_ij = (agents[j].loc[t][:2] - agents[i].loc[t][:2]) / distance
                     f_ij = -1 * self.A1 * np.exp(-distance / self.B) * n_ij
 
@@ -71,8 +75,10 @@ class SocialForceModel:
         vel = agents[i].vel[t]
         F = self.social_force(t, i, agents, destination)
         v_next = vel + F * self.dt
-        v_next = self.capped_velocity(v_next, agents[i].v0*1.3)
+        # v_next = self.capped_velocity(v_next, agents[i].v0*1.3)
+        # v_next = np.round(v_next, 8) # round to 8 decimal places
         loc_next = loc + v_next * self.dt
+        # loc_next = np.round(loc_next, 8) # round to 8 decimal places
         loc_next = np.append(loc_next, t)
 
         return loc_next, v_next
