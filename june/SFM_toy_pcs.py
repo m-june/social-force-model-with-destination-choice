@@ -10,12 +10,13 @@ import time
 import os
 warnings.simplefilter('ignore')
 
+from social_force_model_for_pcs import SocialForceModel
+
 import sys
 sys.path.append("../src")
 
 from main import Agent, run
 # from make_sfm import run_sfm
-from social_force_model import SocialForceModel
 from destination_choice_model import DestinationChoiceModel
 
 def get_args():
@@ -222,7 +223,7 @@ if __name__ == "__main__":
     walls_points = []
     sfm = SocialForceModel(params_sfm, walls_points)
     # num_steps = max([u[-1][-1] for u in trajectories]) + 1 #* 10
-    num_steps = 30 # for test
+    num_steps = 300 # for test
     # dests = [[x[0] for x in sublist] for sublist in destinations]
 
     agents = run_SFM(trajectories, mean_vl, mean_vx, mean_vy, num_steps, sfm, dests)
@@ -247,8 +248,8 @@ if __name__ == "__main__":
     # file_name = file_name.split(".")[0]
     # file_name = file_name + "_sfm.npy"
     # save_path = os.path.join(args.output, file_name)
-    exit()
-    save_path = os.path.join(args.output, "toy_sfm.npy")
+    # exit()
+    save_path = os.path.join(args.output, "toy_sfm_pcs.npy")
     data = np.array((meta_data, new_trajectories, new_destinations, new_obstacles), dtype=object)
     np.save(save_path, data)
     print("saved for ", save_path)

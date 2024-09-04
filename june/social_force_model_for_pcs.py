@@ -78,7 +78,7 @@ class SocialForceModel:
         v_next = vel + F * self.dt
         # v_next = self.capped_velocity(v_next, agents[i].v0*1.3)
         # v_next = np.round(v_next, 8) # round to 8 decimal places
-        loc_next = loc + v_next * self.dt
+        loc_next = loc + vel * self.dt
         # loc_next = np.round(loc_next, 8) # round to 8 decimal places
         loc_next = np.append(loc_next, t+1)
 
