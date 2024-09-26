@@ -24,6 +24,7 @@ def get_args():
     parser.add_argument('-i', '--input', type=str, default='/homes/jmiwa/miwa/work/GC_data/processed_data/duration_60/GC_Dataset_ped1-12685_time0-60_interp9_xrange5-25_yrange15-35.npy')
     parser.add_argument('-o', '--output', type=str, default='/homes/jmiwa/miwa/work/GC_data/simulated_data/toy')
     parser.add_argument('-d', '--device', type=str, default='cpu')
+    parser.add_argument('--file_name', type=str, default='toy')
     parser.add_argument('--a1', type=float, default=3.3)
     parser.add_argument('--b', type=float, default=0.4)
     parser.add_argument('--a2', type=float, default=1)
@@ -191,6 +192,7 @@ if __name__ == "__main__":
     load_path = data_path
     data = np.load(load_path, allow_pickle=True)
     meta_data, trajectories, destinations, obstacles = data
+    print('meta_data', meta_data)
     
     #自分でエージェントを設定する場合
     #2つのエージェントを設定
@@ -249,7 +251,8 @@ if __name__ == "__main__":
     # file_name = file_name + "_sfm.npy"
     # save_path = os.path.join(args.output, file_name)
     # exit()
-    save_path = os.path.join(args.output, "toy_sfm_pcs.npy")
+    file = args.file_name + "_sfm.npy"
+    save_path = os.path.join(args.output, file)
     data = np.array((meta_data, new_trajectories, new_destinations, new_obstacles), dtype=object)
     np.save(save_path, data)
     print("saved for ", save_path)

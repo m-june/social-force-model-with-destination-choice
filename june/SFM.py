@@ -10,12 +10,13 @@ import time
 import os
 warnings.simplefilter('ignore')
 
+from social_force_model_for_pcs import SocialForceModel
+
 import sys
 sys.path.append("../src")
 
 from main import Agent, run
 # from make_sfm import run_sfm
-from social_force_model import SocialForceModel
 from destination_choice_model import DestinationChoiceModel
 
 def get_args():

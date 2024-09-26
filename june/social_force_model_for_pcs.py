@@ -31,19 +31,23 @@ class SocialForceModel:
                 if j != i:
                     distance = np.linalg.norm(
                         agents[i].loc[t][:2] - agents[j].loc[t][:2])
-                    
-                    print('t:{} i:{}'.format(t, i))
-                    print('rel_loc', agents[i].loc[t][:2]-agents[j].loc[t][:2])
 
                     n_ij = (agents[j].loc[t][:2] - agents[i].loc[t][:2]) / distance
                     f_ij = -1 * self.A1 * np.exp(-distance / self.B) * n_ij
 
                     e_jd = (agents[j].dest[t] - agents[j].loc[t][:2]) / \
                         np.linalg.norm(agents[j].dest[t] - agents[j].loc[t][:2])
-                    if np.dot(f_ij, e_jd) >= np.linalg.norm(f_ij) * np.cos(np.angle(self.phi)):
+                    
+                    dot_product = np.dot(f_ij, agents[i].vel[t])
+                    cos_theta = dot_product / (np.linalg.norm(f_ij) * np.linalg.norm(agents[i].vel[t]))
+                    # cos_thetaを度に変換
+                    theta = np.arccos(cos_theta) * 180 / np.pi
+                    if distance > 4:
+                        w = 0
+                    elif theta > 90:
                         w = 1
                     else:
-                        w = self.c
+                        w = 0
                     f_ij = w * f_ij
             F_ij = F_ij + f_ij
 

@@ -2,7 +2,7 @@ input:
   '/home/aaf15257iq/work/GC_annotation/processed_data/duration_60_0.8'
 
 output:
-  '/home/aaf15257iq/work/GC_annotation/simulated_data/duration_60_new'
+  '/home/aaf15257iq/work/GC_annotation/simulated_data/duration_60_08_sfm'
 
 device:
   'cpu'
